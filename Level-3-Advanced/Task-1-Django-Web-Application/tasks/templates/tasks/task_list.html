@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}My Tasks | Task Manager{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>{% if is_admin %}All Tasks (admin){% else %}My Tasks{% endif %}</h1>
+
+  <div class="stats">
+    <span>{{ tasks|length }} total</span>
+    <span>{{ pending }} pending</span>
+    <span>{{ done }} completed</span>
+  </div>
+
+  {% if tasks %}
+    <table>
+      <tr><th>Task</th><th>Status</th><th style="text-align:right">Actions</th></tr>
+      {% for task in tasks %}
+        <tr class="{% if task.completed %}done{% endif %}">
+          <td class="title">
+            <span>{{ task.title }}</span>
+            {% if task.description %}<br><small class="muted">{{ task.description }}</small>{% endif %}
+            <br><small class="muted">{{ task.owner.username }} &middot; {{ task.created_at|date:"N j, Y" }}</small>
+          </td>
+          <td>
+            {% if task.completed %}<span class="status completed">DONE</span>
+            {% else %}<span class="status pending">PENDING</span>{% endif %}
+          </td>
+          <td>
+            <div class="actions">
+              <form class="inline-form" method="post" action="{% url 'task-toggle' task.pk %}">
+                {% csrf_token %}
+                <button class="btn small secondary" type="submit">
+                  {% if task.completed %}Undo{% else %}Done{% endif %}
+                </button>
+              </form>
+              <a class="btn small" href="{% url 'task-update' task.pk %}">Edit</a>
+              <a class="btn small danger" href="{% url 'task-delete' task.pk %}">Delete</a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="empty">No tasks yet. <a href="{% url 'task-create' %}">Create your first task</a>.</p>
+  {% endif %}
+</div>
+{% endblock %}
