@@ -1,0 +1,2 @@
+# To-Do List Application — no external dependencies
+# Requires Python 3.12+
