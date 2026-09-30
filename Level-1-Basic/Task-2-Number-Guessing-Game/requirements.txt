@@ -1,0 +1,2 @@
+# Number Guessing Game — no external dependencies
+# Requires Python 3.12+ (uses the standard `random` module)

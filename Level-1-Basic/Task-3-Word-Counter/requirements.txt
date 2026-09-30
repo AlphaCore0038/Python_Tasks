@@ -1,0 +1,2 @@
+# Word Counter — no external dependencies
+# Requires Python 3.12+

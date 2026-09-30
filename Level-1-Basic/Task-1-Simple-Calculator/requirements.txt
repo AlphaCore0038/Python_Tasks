@@ -1,0 +1,2 @@
+# Simple Calculator — no external dependencies
+# Requires Python 3.12+
